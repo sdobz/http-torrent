@@ -1,8 +1,7 @@
 from flask import Flask, Response, request
 from torrent import TorrentSession
-from gevent import monkey
+from gevent import monkey, wsgi
 monkey.patch_all()
-from gevent import wsgi
 
 torrents = TorrentSession()
 app = Flask(__name__)

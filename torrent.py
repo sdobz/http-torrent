@@ -42,9 +42,9 @@ class _Torrent(object):
 
     def __init__(self, session, magnet, params):
         self.handle = lt.add_magnet_uri(session, str(magnet), params)
+        self.handle.set_sequential_download(True)
 
     def set_streaming(self):
-        self.handle.set_sequential_download(True)
         pieces = dict(enumerate(self.handle.status().pieces))
         next_pieces = [key for key, val in pieces.iteritems() if val][:3]
         for piece in next_pieces:
@@ -76,8 +76,6 @@ class _Torrent(object):
                 return None
 
             self.filename = path.join(tempfile.gettempdir(), media_filename)
-
-        self.set_streaming()
 
         return LimitedHandle(self.downloaded, self.filename)
 
